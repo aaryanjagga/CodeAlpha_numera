@@ -1,0 +1,242 @@
+
+    /* css logic... */  
+        /* =========================================
+           THEME VARIABLES & CORE STYLES
+           ========================================= */
+        :root {
+            /* Default Dark Theme */
+            --bg-color: #0f111a;
+            --bg-gradient: radial-gradient(circle at top left, #1e1b4b, #0f111a 70%);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+            --accent: #818cf8;
+            --accent-glow: rgba(129, 140, 248, 0.4);
+            --btn-bg: rgba(255, 255, 255, 0.05);
+            --btn-hover: rgba(255, 255, 255, 0.1);
+            --btn-active: rgba(255, 255, 255, 0.15);
+            --op-bg: rgba(129, 140, 248, 0.15);
+            --op-text: #818cf8;
+            --calc-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f8fafc;
+            --bg-gradient: radial-gradient(circle at top right, #e2e8f0, #f8fafc 80%);
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(0, 0, 0, 0.05);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --accent: #4f46e5;
+            --accent-glow: rgba(79, 70, 229, 0.2);
+            --btn-bg: rgba(255, 255, 255, 0.9);
+            --btn-hover: rgba(0, 0, 0, 0.05);
+            --btn-active: rgba(0, 0, 0, 0.1);
+            --op-bg: rgba(79, 70, 229, 0.1);
+            --op-text: #4f46e5;
+            --calc-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="neon"] {
+            --bg-color: #050505;
+            --bg-gradient: radial-gradient(circle at center, #1a0033, #050505 80%);
+            --glass-bg: rgba(20, 20, 20, 0.8);
+            --glass-border: #ff00ea;
+            --text-main: #ffffff;
+            --text-muted: #ffb3f7;
+            --accent: #00ffff;
+            --accent-glow: rgba(0, 255, 255, 0.6);
+            --btn-bg: rgba(10, 10, 10, 0.9);
+            --btn-hover: rgba(255, 0, 234, 0.2);
+            --btn-active: rgba(0, 255, 255, 0.3);
+            --op-bg: rgba(0, 255, 255, 0.15);
+            --op-text: #00ffff;
+            --calc-shadow: 0 0 40px rgba(255, 0, 234, 0.3);
+        }
+
+        [data-theme="amoled"] {
+            --bg-color: #000000;
+            --bg-gradient: none;
+            --glass-bg: #000000;
+            --glass-border: #333333;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --accent: #ffffff;
+            --accent-glow: rgba(255, 255, 255, 0.2);
+            --btn-bg: #111111;
+            --btn-hover: #222222;
+            --btn-active: #333333;
+            --op-bg: #222222;
+            --op-text: #ffffff;
+            --calc-shadow: none;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: var(--bg-gradient);
+            color: var(--text-main);
+            transition: background 0.5s ease, color 0.5s ease;
+            cursor: none; /* Hide default cursor for custom cursor */
+            overflow-x: hidden;
+        }
+
+        /* =========================================
+           GLASSMORPHISM & UI UTILITIES
+           ========================================= */
+        .glass-panel {
+            background: var(--glass-bg);
+            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--calc-shadow);
+        }
+
+        .calc-btn {
+            background: var(--btn-bg);
+            color: var(--text-main);
+            border: 1px solid var(--glass-border);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .calc-btn:hover {
+            background: var(--btn-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .calc-btn:active, .calc-btn.pressed {
+            background: var(--btn-active);
+            transform: translateY(1px) scale(0.95);
+        }
+
+        .calc-btn.op-btn {
+            background: var(--op-bg);
+            color: var(--op-text);
+            font-weight: 600;
+        }
+
+        .calc-btn.accent-btn {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 0 15px var(--accent-glow);
+            border: none;
+        }
+
+        .calc-btn.accent-btn:hover {
+            box-shadow: 0 0 25px var(--accent-glow);
+            filter: brightness(1.1);
+        }
+
+        /* Ripple Effect */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        @keyframes ripple {
+            to { transform: scale(4); opacity: 0; }
+        }
+
+        /* =========================================
+           CUSTOM CURSOR & PARTICLES
+           ========================================= */
+        #custom-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+            z-index: 9999;
+            box-shadow: 0 0 10px var(--accent-glow);
+            mix-blend-mode: difference;
+        }
+        #custom-cursor.hovering {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: transparent;
+        }
+        
+        .particles {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--accent);
+            opacity: 0.2;
+            animation: float-up linear infinite;
+        }
+        @keyframes float-up {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            50% { opacity: 0.3; }
+            100% { transform: translateY(-20vh) scale(1); opacity: 0; }
+        }
+
+        /* =========================================
+           LAYOUT SPECIFICS & ANIMATIONS
+           ========================================= */
+        /* Splash Screen */
+        #splash {
+            position: fixed; inset: 0; z-index: 10000;
+            background: var(--bg-color);
+            display: flex; flex-direction: column; justify-content: center; items-center;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+        
+        /* Display Scrollbar Hidden */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Scientific Panel Transition */
+        #sci-panel {
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        #sci-panel.open {
+            max-height: 300px;
+            opacity: 1;
+            margin-bottom: 0.75rem;
+        }
+
+        /* History Sidebar */
+        #history-panel {
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        #history-panel.open {
+            transform: translateX(0);
+        }
+
+        /* Responsive Text */
+        .calc-result {
+            white-space: nowrap;
+            direction: rtl; /* Allows scrolling from right to left */
+        }
+        
+        /* Disable custom cursor on touch devices */
+        @media (hover: none) and (pointer: coarse) {
+            #custom-cursor { display: none; }
+            body { cursor: auto; }
+            .calc-btn { touch-action: manipulation; } /* Prevent double-tap zoom for native app feel */
+        }
+        
+        /* Mobile specific layout variables */
+        @media (max-width: 1024px) {
+            body { overflow: hidden; } /* Lock scroll on mobile/tablet to behave like an app */
+        }
+    
